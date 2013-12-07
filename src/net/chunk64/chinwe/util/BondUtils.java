@@ -53,7 +53,6 @@ public class BondUtils
 			{
 				LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
 				leatherArmorMeta.setColor(colour);
-				//				itemStack.setItemMeta(leatherArmorMeta);
 			}
 		}
 
