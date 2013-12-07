@@ -53,6 +53,7 @@ public abstract class BaseBondCommand implements CommandExecutor
 		} catch (Exception e)
 		{
 			BondUtils.message(sender, "&cError: " + (e.getMessage() == null ? e : e.getMessage()));
+			e.printStackTrace();
 		}
 		return true;
 	}
