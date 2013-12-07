@@ -2,9 +2,11 @@ package net.chunk64.chinwe.listeners;
 
 import net.chunk64.chinwe.Agent;
 import net.chunk64.chinwe.Main;
+import net.chunk64.chinwe.commands.Permission;
 import net.chunk64.chinwe.gadgets.GadgetType;
 import net.chunk64.chinwe.gadgets.Wristwatch;
 import net.chunk64.chinwe.util.BondUtils;
+import net.chunk64.chinwe.util.CommandUtils;
 import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -20,11 +22,11 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WatchListener implements Listener
+public class WristwatchListener implements Listener
 {
 	private Main plugin;
 
-	public WatchListener(Main plugin)
+	public WristwatchListener(Main plugin)
 	{
 		this.plugin = plugin;
 	}
@@ -59,6 +61,9 @@ public class WatchListener implements Listener
 		{
 			if (watch.isCooldownOver())
 			{
+				// permission
+				if (!CommandUtils.hasPermission(event.getPlayer(), Permission.LASER))
+					return;
 				watch.toggleLaser();
 				return;
 			}
@@ -66,7 +71,13 @@ public class WatchListener implements Listener
 
 		// left click grapple
 		if (event.getAction().toString().contains("LEFT"))
+		{
+			// permission
+			if (!CommandUtils.hasPermission(event.getPlayer(), Permission.GRAPPLE))
+				return;
+
 			watch.execute();
+		}
 
 		// shoot grapple
 		if (watch.isExtended())

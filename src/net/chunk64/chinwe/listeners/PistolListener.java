@@ -2,9 +2,11 @@ package net.chunk64.chinwe.listeners;
 
 import net.chunk64.chinwe.Agent;
 import net.chunk64.chinwe.Main;
+import net.chunk64.chinwe.commands.Permission;
 import net.chunk64.chinwe.gadgets.GadgetType;
 import net.chunk64.chinwe.gadgets.Pistol;
 import net.chunk64.chinwe.util.BondUtils;
+import net.chunk64.chinwe.util.CommandUtils;
 import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
@@ -39,6 +41,10 @@ public class PistolListener implements Listener
 			final Player shooter = (Player) ((Arrow) event.getDamager()).getShooter(); // only players could shoot a bullet
 			final LivingEntity entity = (LivingEntity) event.getEntity();
 
+			// permission
+			if (entity instanceof Player && !CommandUtils.hasPermission(shooter, Permission.GUN_MURDER))
+				return;
+
 			// ding
 			shooter.playSound(shooter.getLocation(), Sound.ORB_PICKUP, 1F, 1F);
 
@@ -59,6 +65,10 @@ public class PistolListener implements Listener
 	@EventHandler
 	public void onPistolFire(PlayerInteractEvent event)
 	{
+		// left click
+		if (!event.getAction().toString().contains("LEFT"))
+			return;
+
 		// holding pistol
 		if (!event.getPlayer().getItemInHand().equals(GadgetType.PISTOL.getItemStack()))
 			return;

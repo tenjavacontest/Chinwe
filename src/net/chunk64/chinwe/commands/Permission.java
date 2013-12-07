@@ -5,7 +5,7 @@ import org.bukkit.permissions.PermissionDefault;
 public enum Permission
 {
 
-	BOND(null, false);
+	BOND("join MI6", true), BONDADMIN(null, false), LASER("use the laser", false), GRAPPLE("use the grapple", true), PEN("use the explosive pen", false), GUN_MURDER("murder other players", false);
 
 	private static final String PLUGIN_NAME = "bond";
 	private String message;

@@ -1,14 +1,12 @@
 package net.chunk64.chinwe.util;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.HashSet;
 import java.util.List;
@@ -17,7 +15,7 @@ import java.util.Set;
 public class BondUtils
 {
 
-	public static final String PREFIX = "§8[§6007§8] ";
+	public static final String PREFIX = "§8[§5B§8] ";
 	private static final Set<Material> TRANSPARENT = new HashSet<>();
 
 	static
@@ -80,40 +78,39 @@ public class BondUtils
 	 * @param itemStack   The ItemStack to edit
 	 * @param name        The optional name
 	 * @param description The optional lore
-	 * @param colour      The optional leather armour colour
 	 * @return The edited ItemStack
 	 */
-	public static ItemStack setInfo(ItemStack itemStack, String name, List<String> description, Color colour)
+	public static ItemStack setInfo(ItemStack itemStack, String name, List<String> description)
 	{
 		ItemMeta meta = itemStack.getItemMeta();
 
 		if (name != null)
-			meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+			meta.setDisplayName(ChatColor.DARK_AQUA + ChatColor.translateAlternateColorCodes('&', name));
 
 		if (description != null)
 		{
 			for (int i = 0; i < description.size(); i++)
-				description.set(i, ChatColor.translateAlternateColorCodes('&', description.get(i)));
+				description.set(i, ChatColor.BLUE + ChatColor.translateAlternateColorCodes('&', description.get(i)));
 			meta.setLore(description);
 		}
 
-		if (colour != null)
-		{
-			// must be leather
-			if (itemStack.getType().toString().startsWith("LEATHER_"))
-			{
-				LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
-				leatherArmorMeta.setColor(colour);
-			}
-		}
+//		if (colour != null)
+//		{
+//			// must be leather
+//			if (itemStack.getType().toString().startsWith("LEATHER_"))
+//			{
+//				LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
+//				leatherArmorMeta.setColor(colour);
+//			}
+//		}
 
 		itemStack.setItemMeta(meta);
 		return itemStack;
 	}
 
-	public static ItemStack setInfo(Material material, String name, List<String> description, Color colour)
+	public static ItemStack setInfo(Material material, String name, List<String> description)
 	{
-		return setInfo(new ItemStack(material), name, description, colour);
+		return setInfo(new ItemStack(material), name, description);
 	}
 
 	/**

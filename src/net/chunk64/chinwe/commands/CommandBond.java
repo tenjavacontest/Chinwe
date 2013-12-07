@@ -30,13 +30,14 @@ public class CommandBond extends BaseBondCommand
 		{
 			new Agent(p);
 			BondUtils.message(sender, "&bYou have been recruited by &3MI6!");
+			BondUtils.message(sender, "&7Mouse over your gadgets to see how to use them!");
 		}
 
 		// destroy
 		else
 		{
-			agent.terminate(false);
-			BondUtils.message(sender, "&bYou retired from field work!");
+			agent.terminate();
+			BondUtils.message(sender, "&bYou retired from &3MI6!");
 		}
 
 	}

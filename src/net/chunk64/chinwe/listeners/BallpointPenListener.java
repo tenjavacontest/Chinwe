@@ -2,8 +2,10 @@ package net.chunk64.chinwe.listeners;
 
 import net.chunk64.chinwe.Agent;
 import net.chunk64.chinwe.Main;
+import net.chunk64.chinwe.commands.Permission;
 import net.chunk64.chinwe.gadgets.BallpointPen;
 import net.chunk64.chinwe.gadgets.GadgetType;
+import net.chunk64.chinwe.util.CommandUtils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -35,6 +37,10 @@ public class BallpointPenListener implements Listener
 		// get pen
 		BallpointPen pen = (BallpointPen) agent.getGadget(GadgetType.PEN);
 
+		// permission
+		if (!CommandUtils.hasPermission(event.getPlayer(), Permission.PEN))
+			return;
+
 		// click
 		pen.execute();
 	}
@@ -56,7 +62,6 @@ public class BallpointPenListener implements Listener
 		BallpointPen pen = (BallpointPen) agent.getGadget(GadgetType.PEN);
 		pen.drop(event.getItemDrop(), event.getPlayer());
 	}
-
 
 
 }

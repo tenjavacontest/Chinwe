@@ -26,7 +26,6 @@ public class AgentListener implements Listener
 
 
 		Agent.updateXp(agent, event.getPlayer().getInventory().getItem(event.getNewSlot()), event.getPlayer());
-
 	}
 	
 

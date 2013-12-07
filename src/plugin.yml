@@ -8,3 +8,7 @@ commands:
     usage: /bond
     description: Become 007!
     aliases: [007, jamesbond]
+  bondadmin:
+    usage: /bondadmin
+    description: Admin commands
+    aliases: [007admin]

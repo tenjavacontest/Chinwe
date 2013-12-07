@@ -1,13 +1,10 @@
 package net.chunk64.chinwe;
 
 import net.chunk64.chinwe.gadgets.*;
-import net.chunk64.chinwe.util.BondUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,20 +20,12 @@ public class Agent
 		this.name = player.getName();
 		agents.put(name, this);
 
-		// TODO store inventory and xp
-		store(player);
-
-
-		// equip
-		// tux
-		ItemStack tux = BondUtils.setInfo(Material.CHAINMAIL_CHESTPLATE, "&6Tuxedo", Arrays.asList("&aWhat a gentleman"), null);
-		player.getInventory().setChestplate(tux);
-
-		// martini
-		ItemStack martini = BondUtils.setInfo(Material.POTION, "&6Martini", Arrays.asList("&aShaken, not stirred"), null);
-		player.getInventory().setItem(8, martini);
+		// TODO store inventory and xp, but no time :(
+		clear(player);
 
 		// give gadgets
+		player.getInventory().setItem(8, GadgetType.MARTINI.getItemStack());
+		player.getInventory().setChestplate(GadgetType.TUXEDO.getItemStack());
 		giveGadget(new Pistol(this));
 		giveGadget(new BallpointPen(this));
 		giveGadget(new Wristwatch(this));
@@ -46,15 +35,10 @@ public class Agent
 	}
 
 
-	public void terminate(boolean destroyGadgets)
+	public void terminate()
 	{
 		agents.remove(name);
 
-		if (destroyGadgets)
-		{
-			for (Gadget gadget : gadgets.values())
-				gadget.destroy();
-		}
 		gadgets = null;
 
 		Player player = getPlayer();
@@ -62,7 +46,7 @@ public class Agent
 		if (player != null)
 		{
 			// TODO restore inventory
-			store(player);
+			clear(player);
 
 			// effects?
 		}
@@ -135,9 +119,9 @@ public class Agent
 	/**
 	 * Simple clearing of inventory and xp reset
 	 */
-	private void store(Player player)
+	private void clear(Player player)
 	{
-		// TODO store and restore
+		// TODO clear and restore
 		player.getInventory().clear();
 		player.getInventory().setArmorContents(new ItemStack[player.getInventory().getArmorContents().length]);
 		player.setLevel(0);

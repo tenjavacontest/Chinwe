@@ -25,7 +25,7 @@ public class CommandUtils
 	{
 		boolean hasPerm = sender.hasPermission(perm.getPermission());
 		if (!hasPerm)
-			BondUtils.message(sender, "§cYou can't " + perm.getMessage() + ", you need §6" + perm.getPermission().getName());
+			BondUtils.message(sender, "§cYou can't " + perm.getMessage() + ", you need the permission §a" + perm.getPermission().getName());
 
 		return hasPerm;
 	}
@@ -35,7 +35,7 @@ public class CommandUtils
 	 */
 	public static void sendUsage(CommandSender sender, Command cmd)
 	{
-		BondUtils.message(sender, "&cUsage: " + (cmd.getUsage() != null ? cmd.getUsage() : "/" + cmd.getName()));
+		BondUtils.message(sender, "&cUse /" + cmd.getName() + " for help.");
 	}
 
 
