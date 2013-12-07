@@ -18,6 +18,11 @@ bond.laser: Allow usage of the laser gadget
 bond.grapple: Allow usage of the grapple watch
 bond.pen: Allow usage of the explosive pen
 bond.gunmurder: Allow the killing of another player with the gun
+Being OP will give you access to all these permissions
+
+---
 
 Keep an eye on your experience bar and level, they show your ammo/bomb fuse!
 Try scrolling through your hotbar, your xp bar/level updates depending on what you're holding :>
+
+You should enable the gamerule keepInventory, as if you die, you drop your gadgets and have to disable then reenable to get them back :o
