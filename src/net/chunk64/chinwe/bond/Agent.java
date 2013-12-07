@@ -1,22 +1,23 @@
 package net.chunk64.chinwe.bond;
 
+import net.chunk64.chinwe.gadgets.BallpointPen;
 import net.chunk64.chinwe.gadgets.Gadget;
 import net.chunk64.chinwe.gadgets.GadgetType;
 import net.chunk64.chinwe.gadgets.Pistol;
 import net.chunk64.chinwe.util.BondUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Agent
 {
-	public static Map<String, Agent> agents = new HashMap<>();
+	private static Map<String, Agent> agents = new HashMap<>();
 	private String name;
 	private Map<GadgetType, Gadget> gadgets = new HashMap<>();
 
@@ -25,13 +26,13 @@ public class Agent
 		this.name = player.getName();
 		agents.put(name, this);
 
-		// TODO store inventory
-		clear(player);
+		// TODO store inventory and xp
+		store(player);
 
 
 		// equip
 		// tux
-		ItemStack tux = BondUtils.setInfo(Material.LEATHER_CHESTPLATE, "&7Tuxedo", Arrays.asList("&aWhat a gentleman"), Color.BLACK);
+		ItemStack tux = BondUtils.setInfo(Material.CHAINMAIL_CHESTPLATE, "&6Tuxedo", Arrays.asList("&aWhat a gentleman"), null);
 		player.getInventory().setChestplate(tux);
 
 		// martini
@@ -40,6 +41,7 @@ public class Agent
 
 		// give gadgets
 		giveGadget(new Pistol(this));
+		giveGadget(new BallpointPen(this));
 	}
 
 
@@ -47,25 +49,27 @@ public class Agent
 	{
 		agents.remove(name);
 
+		for (Gadget gadget : gadgets.values())
+		  gadget.destroy();
+		gadgets = null;
+
 		Player player = getPlayer();
 
 		if (player != null)
 		{
 			// TODO restore inventory
-			clear(player);
+			store(player);
 
 			// effects?
 		}
-
 	}
 
 	public void giveGadget(Gadget gadget)
 	{
 		gadgets.put(gadget.getType(), gadget);
-		ItemStack itemStack = new ItemStack(gadget.getType().getMaterial()); // TODO change amounts/data?
 		Player player = getPlayer();
 		if (player != null)
-			player.getInventory().addItem(itemStack);
+			player.getInventory().addItem(gadget.getType().getItemStack());
 	}
 
 	/**
@@ -93,13 +97,20 @@ public class Agent
 		return agents.get(name);
 	}
 
-	/**
-	 * Simple clearing of inventory
-	 */
-	private void clear(Player player)
+	public static Collection<Agent> getAgents()
 	{
+		return agents.values();
+	}
+
+	/**
+	 * Simple clearing of inventory and xp reset
+	 */
+	private void store(Player player)
+	{
+		// TODO store and restore
 		player.getInventory().clear();
 		player.getInventory().setArmorContents(new ItemStack[player.getInventory().getArmorContents().length]);
+		player.setLevel(0);
 	}
 
 	@Override

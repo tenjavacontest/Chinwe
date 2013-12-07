@@ -1,20 +1,26 @@
 package net.chunk64.chinwe.gadgets;
 
+import net.chunk64.chinwe.util.BondUtils;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
 
 public enum GadgetType
 {
-	PISTOL(Material.FENCE_GATE), PEN(Material.BLAZE_ROD);
+	PISTOL(BondUtils.setInfo(Material.TRIPWIRE_HOOK, "&6Silenced Walther PPK", Arrays.asList("&aYour gun of choice"), null)),
+	PEN(BondUtils.setInfo(Material.BLAZE_ROD, "&6Ballpoint Pen", Arrays.asList("&aBe careful about clicking it..."), null));
 
-	private Material material;
+	private ItemStack itemStack;
 
-	GadgetType(Material material)
+	GadgetType(ItemStack itemStack)
 	{
-		this.material = material;
+		this.itemStack = itemStack;
 	}
 
-	public Material getMaterial()
+
+	public ItemStack getItemStack()
 	{
-		return material;
+		return itemStack;
 	}
 }

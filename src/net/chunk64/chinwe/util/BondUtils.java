@@ -2,10 +2,10 @@ package net.chunk64.chinwe.util;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -68,10 +68,10 @@ public class BondUtils
 	/**
 	 * Gets BlockFace corresponding to the direction you're looking in
 	 */
-	public static BlockFace getDirection(LivingEntity livingEntity)
+	public static BlockFace getDirection(Location location)
 	{
-		float yaw = livingEntity.getLocation().getYaw();
-		int angle = 45 * (Math.round(yaw / 45));
+		float yaw = location.getYaw();
+		int angle = Math.abs(45 * (Math.round(yaw / 45)));
 		BlockFace blockFace;
 
 		// TODO more precision
@@ -103,10 +103,11 @@ public class BondUtils
 				blockFace = BlockFace.SOUTH_EAST;
 				break;
 			default:
-				blockFace = BlockFace.UP;
+				blockFace = BlockFace.SOUTH; // why not
 		}
 
 		return blockFace.getOppositeFace();
 	}
+
 
 }
