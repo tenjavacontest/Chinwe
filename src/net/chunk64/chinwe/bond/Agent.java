@@ -1,5 +1,8 @@
 package net.chunk64.chinwe.bond;
 
+import net.chunk64.chinwe.gadgets.Gadget;
+import net.chunk64.chinwe.gadgets.GadgetType;
+import net.chunk64.chinwe.gadgets.Pistol;
 import net.chunk64.chinwe.util.BondUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -13,8 +16,9 @@ import java.util.Map;
 
 public class Agent
 {
-	private static Map<String, Agent> agents = new HashMap<>();
+	public static Map<String, Agent> agents = new HashMap<>();
 	private String name;
+	private Map<GadgetType, Gadget> gadgets = new HashMap<>();
 
 	public Agent(Player player)
 	{
@@ -34,9 +38,8 @@ public class Agent
 		ItemStack martini = BondUtils.setInfo(Material.POTION, "&6Martini", Arrays.asList("&aShaken, not stirred"), null);
 		player.getInventory().setItem(8, martini);
 
-
-		// TODO register listener
-
+		// give gadgets
+		giveGadget(new Pistol(this));
 	}
 
 
@@ -52,11 +55,26 @@ public class Agent
 			clear(player);
 
 			// effects?
-
 		}
 
 	}
 
+	public void giveGadget(Gadget gadget)
+	{
+		gadgets.put(gadget.getType(), gadget);
+		ItemStack itemStack = new ItemStack(gadget.getType().getMaterial()); // TODO change amounts/data?
+		Player player = getPlayer();
+		if (player != null)
+			player.getInventory().addItem(itemStack);
+	}
+
+	/**
+	 * Will return null if gadget is not found
+	 */
+	public Gadget getGadget(GadgetType type)
+	{
+		return gadgets.get(type);
+	}
 
 	/**
 	 * Will return null if offline
@@ -82,6 +100,12 @@ public class Agent
 	{
 		player.getInventory().clear();
 		player.getInventory().setArmorContents(new ItemStack[player.getInventory().getArmorContents().length]);
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Agent{name=" + name + "}";
 	}
 
 

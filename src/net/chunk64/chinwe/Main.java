@@ -13,14 +13,14 @@ import java.lang.reflect.InvocationTargetException;
 public class Main extends JavaPlugin
 {
 
+	private static Main instance;
 
 	@Override
 	public void onEnable()
 	{
-		// perhaps something will happen here
+		instance = this;
 		init();
 		new Config(this);
-
 
 	}
 
@@ -49,5 +49,10 @@ public class Main extends JavaPlugin
 	{
 		Constructor constructor = clazz.getConstructor(PluginCommand.class, Boolean.TYPE, Permission.class);
 		constructor.newInstance(new Object[]{getCommand(command), playerOnly, perm});
+	}
+
+	public static Main getInstance()
+	{
+		return instance;
 	}
 }
