@@ -74,6 +74,7 @@ public class BondUtils
 		int angle = 45 * (Math.round(yaw / 45));
 		BlockFace blockFace;
 
+		// TODO more precision
 		switch (angle)
 		{
 			case 0:
