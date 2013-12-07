@@ -1,8 +1,10 @@
 package net.chunk64.chinwe;
 
-import net.chunk64.chinwe.bond.AgentListener;
 import net.chunk64.chinwe.commands.CommandBond;
 import net.chunk64.chinwe.commands.Permission;
+import net.chunk64.chinwe.listeners.AgentListener;
+import net.chunk64.chinwe.listeners.BallpointPenListener;
+import net.chunk64.chinwe.listeners.PistolListener;
 import net.chunk64.chinwe.util.Config;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -34,6 +36,8 @@ public class Main extends JavaPlugin
 			commands = false;
 
 			getServer().getPluginManager().registerEvents(new AgentListener(this), this);
+			getServer().getPluginManager().registerEvents(new PistolListener(this), this);
+			getServer().getPluginManager().registerEvents(new BallpointPenListener(this), this);
 
 		} catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e)
 		{

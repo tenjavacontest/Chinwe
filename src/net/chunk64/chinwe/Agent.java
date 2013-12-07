@@ -1,4 +1,4 @@
-package net.chunk64.chinwe.bond;
+package net.chunk64.chinwe;
 
 import net.chunk64.chinwe.gadgets.BallpointPen;
 import net.chunk64.chinwe.gadgets.Gadget;
@@ -42,15 +42,22 @@ public class Agent
 		// give gadgets
 		giveGadget(new Pistol(this));
 		giveGadget(new BallpointPen(this));
+
+
+		// update level
+		updateXp(this, player.getItemInHand(), player);
 	}
 
 
-	public void terminate()
+	public void terminate(boolean destroyGadgets)
 	{
 		agents.remove(name);
 
-		for (Gadget gadget : gadgets.values())
-		  gadget.destroy();
+		if (destroyGadgets)
+		{
+			for (Gadget gadget : gadgets.values())
+				gadget.destroy();
+		}
 		gadgets = null;
 
 		Player player = getPlayer();
@@ -64,13 +71,22 @@ public class Agent
 		}
 	}
 
-	public void giveGadget(Gadget gadget)
+	public void giveGadget(final Gadget gadget)
 	{
 		gadgets.put(gadget.getType(), gadget);
 		Player player = getPlayer();
 		if (player != null)
 			player.getInventory().addItem(gadget.getType().getItemStack());
 	}
+
+	public void removeGadget(Gadget gadget)
+	{
+		gadgets.remove(gadget.getType());
+		Player player = getPlayer();
+		if (player != null)
+			player.getInventory().remove(gadget.getType().getItemStack());
+	}
+
 
 	/**
 	 * Will return null if gadget is not found
@@ -102,6 +118,26 @@ public class Agent
 		return agents.values();
 	}
 
+	public static void updateXp(Agent agent, ItemStack itemStack, Player player)
+	{
+		int level = 0;
+		float bar = 1F;
+
+		for (GadgetType type : GadgetType.values())
+		{
+			if (type.getItemStack().equals(itemStack))
+			{
+				Gadget gadget = agent.getGadget(type);
+				level = gadget.getXpLevel();
+				bar = gadget.getXpBar();
+				break;
+			}
+		}
+		player.setLevel(level);
+		player.setExp(bar);
+	}
+
+
 	/**
 	 * Simple clearing of inventory and xp reset
 	 */
@@ -118,6 +154,5 @@ public class Agent
 	{
 		return "Agent{name=" + name + "}";
 	}
-
 
 }

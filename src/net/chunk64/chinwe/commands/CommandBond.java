@@ -1,6 +1,6 @@
 package net.chunk64.chinwe.commands;
 
-import net.chunk64.chinwe.bond.Agent;
+import net.chunk64.chinwe.Agent;
 import net.chunk64.chinwe.util.BondUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -35,7 +35,7 @@ public class CommandBond extends BaseBondCommand
 		// destroy
 		else
 		{
-			agent.terminate();
+			agent.terminate(true);
 			BondUtils.message(sender, "&bYou retired from field work!");
 		}
 

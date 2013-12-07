@@ -1,13 +1,11 @@
 package net.chunk64.chinwe.gadgets;
 
-import net.chunk64.chinwe.bond.Agent;
+import net.chunk64.chinwe.Agent;
 import org.bukkit.Sound;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.util.Vector;
 
 public class BallpointPen extends Gadget
 {
@@ -17,18 +15,23 @@ public class BallpointPen extends Gadget
 	public BallpointPen(Agent agent)
 	{
 		super(agent, GadgetType.PEN);
+
 		Player player = agent.getPlayer();
 		setXpLevel(cumulativeClicks, player);
 		setXpBar(1F, player);
 	}
 
 
-
 	@Override
-	void execute()
+	public void execute()
 	{
+
 		// cooldown
 		if (!isCooldownOver())
+			return;
+
+		// already ticking
+		if (task != null)
 			return;
 
 		final Player player = agent.getPlayer();
@@ -38,47 +41,17 @@ public class BallpointPen extends Gadget
 		// explode
 		if (--cumulativeClicks <= 0)
 		{
-			ItemStack toRemove = player.getItemInHand().clone();
-			toRemove.setAmount(1);
-			player.getInventory().remove(toRemove);
-
 			// start ticking
 			setXpBar(1F, player);
 
-			task = new BukkitRunnable()
-			{
-				int time = 10; // tick for 5 seconds
-				float bit = 100 / time; //
-
-				@Override
-				public void run()
-				{
-					if (--time < 0)
-					{
-						// boom
-						player.sendMessage("boom yey");
-						cancel();
-					}
-
-					// start ticking in hand
-					tick();
-
-					// decrease xp bar
-					setXpBar(player.getExp() - bit, player);
-				}
-
-				private void tick()
-				{
-					for (int i = 0; i < (time <= 5 ? 2 : 1); i++)
-						player.getWorld().playSound(player.getLocation(), Sound.NOTE_STICKS, 0.5F, 1F);
-				}
-			}.runTaskTimer(plugin, 0L, 10L);
+			task = new BallpointPenTicker(player, this, true, null, BallpointPenTicker.ExplosionPoint.PLAYER).runTaskTimer(plugin, 0L, 10L);
 			return;
 		}
 
 		// click down
 		setXpLevel(cumulativeClicks, player);
 		player.getWorld().playSound(player.getLocation(), Sound.WOOD_CLICK, 0.2F, 1.5F);
+		addCooldown(0.5);
 
 
 	}
@@ -89,22 +62,27 @@ public class BallpointPen extends Gadget
 	}
 
 
-	@EventHandler
-	public void onClick(PlayerInteractEvent event)
+	/**
+	 * Drops and blows up the item after finishing the countdown
+	 *
+	 * @param item The pen
+	 */
+	public void drop(Item item, Player player)
 	{
-		// must be pen
-		if (!event.getPlayer().getItemInHand().equals(GadgetType.PEN.getItemStack()))
-			return;
+		System.out.println("task = " + task);
 
-		// agent
-		Agent agent = Agent.getAgent(event.getPlayer().getName());
-		if (agent == null)
-			return;
+		if (task != null)
+			task.cancel();
 
-		// get pen
-		BallpointPen pen = (BallpointPen) agent.getGadget(GadgetType.PEN);
+		// no pickup
+		item.setPickupDelay(Integer.MAX_VALUE);
 
-		// click
-		pen.execute();
+		// throw it away
+		Vector direction = player.getLocation().getDirection();
+		direction.setY(direction.getY() + 0.1);
+		item.setVelocity(direction.normalize());
+
+		// start timer again
+		new BallpointPenTicker(player, this, false, item, BallpointPenTicker.ExplosionPoint.ITEM).runTaskTimer(plugin, 0L, 10L);
 	}
 }
