@@ -1,5 +1,10 @@
-name: Chinwe
+name: Bond
 version: 1.0
 main: net.chunk64.chinwe.Main
 description: Chinwe's entry for ten.java
 author: Chinwe
+commands:
+  bond:
+    usage: /bond
+    description: Become 007!
+    aliases: [007, jamesbond]
