@@ -118,7 +118,6 @@ public class WristwatchListener implements Listener
 					// end
 					if (pos > blocks.size() - 1)
 					{
-						player.sendBlockChange(blocks.get(blocks.size() - 1).getLocation(), 20, (byte) 0);
 						// shove to last one
 						player.setVelocity(blocks.get(blocks.size() - 1).getLocation().toVector().subtract(player.getLocation().toVector()).normalize().multiply(1.6).add(new Vector(0, 0.5, 0)));
 						watch.toggleExtended();
