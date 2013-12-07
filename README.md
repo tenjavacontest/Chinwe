@@ -1,4 +1,4 @@
 Chinwe
 ============
-I'll be doing the 08:00 UTC contest!
-I may or may not be streaming [here](http://twitch.tv/chinwudlz), depending on my internet :[
+I am doing the 08:00 contest, based on Ian Fleming's James Bond books :)
+
