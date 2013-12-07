@@ -1,9 +1,6 @@
 package net.chunk64.chinwe;
 
-import net.chunk64.chinwe.gadgets.BallpointPen;
-import net.chunk64.chinwe.gadgets.Gadget;
-import net.chunk64.chinwe.gadgets.GadgetType;
-import net.chunk64.chinwe.gadgets.Pistol;
+import net.chunk64.chinwe.gadgets.*;
 import net.chunk64.chinwe.util.BondUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -42,7 +39,7 @@ public class Agent
 		// give gadgets
 		giveGadget(new Pistol(this));
 		giveGadget(new BallpointPen(this));
-
+		giveGadget(new Wristwatch(this));
 
 		// update level
 		updateXp(this, player.getItemInHand(), player);
@@ -82,9 +79,6 @@ public class Agent
 	public void removeGadget(Gadget gadget)
 	{
 		gadgets.remove(gadget.getType());
-		Player player = getPlayer();
-		if (player != null)
-			player.getInventory().remove(gadget.getType().getItemStack());
 	}
 
 
@@ -155,4 +149,8 @@ public class Agent
 		return "Agent{name=" + name + "}";
 	}
 
+	public String getName()
+	{
+		return name;
+	}
 }

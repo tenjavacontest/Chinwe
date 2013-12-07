@@ -1,5 +1,7 @@
 package net.chunk64.chinwe.gadgets;
 
+import net.chunk64.chinwe.Agent;
+import net.chunk64.chinwe.Main;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Item;
@@ -87,8 +89,16 @@ public class BallpointPenTicker extends BukkitRunnable
 		location.getWorld().playSound(location, Sound.AMBIENCE_THUNDER, 1F, 1F);
 
 		// give a new one
-		gadget.getAgent().giveGadget(new BallpointPen(gadget.getAgent()));
-		gadget.destroy();
+		final Agent agent = gadget.getAgent();
+
+		new BukkitRunnable()
+		{
+			@Override
+			public void run()
+			{
+				agent.giveGadget(new BallpointPen(agent));
+			}
+		}.runTaskLater(Main.getInstance(), 20L);
 
 	}
 

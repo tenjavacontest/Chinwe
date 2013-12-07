@@ -10,16 +10,67 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class BondUtils
 {
 
 	public static final String PREFIX = "§8[§6007§8] ";
+	private static final Set<Material> TRANSPARENT = new HashSet<>();
+
+	static
+	{
+		TRANSPARENT.add(Material.AIR);
+		TRANSPARENT.add(Material.SAPLING);
+		TRANSPARENT.add(Material.POWERED_RAIL);
+		TRANSPARENT.add(Material.DETECTOR_RAIL);
+		TRANSPARENT.add(Material.LONG_GRASS);
+		TRANSPARENT.add(Material.DEAD_BUSH);
+		TRANSPARENT.add(Material.YELLOW_FLOWER);
+		TRANSPARENT.add(Material.RED_ROSE);
+		TRANSPARENT.add(Material.BROWN_MUSHROOM);
+		TRANSPARENT.add(Material.RED_MUSHROOM);
+		TRANSPARENT.add(Material.TORCH);
+		TRANSPARENT.add(Material.REDSTONE_WIRE);
+		TRANSPARENT.add(Material.SEEDS);
+		TRANSPARENT.add(Material.SIGN_POST);
+		TRANSPARENT.add(Material.WOODEN_DOOR);
+		TRANSPARENT.add(Material.LADDER);
+		TRANSPARENT.add(Material.RAILS);
+		TRANSPARENT.add(Material.WALL_SIGN);
+		TRANSPARENT.add(Material.LEVER);
+		TRANSPARENT.add(Material.STONE_PLATE);
+		TRANSPARENT.add(Material.IRON_DOOR_BLOCK);
+		TRANSPARENT.add(Material.WOOD_PLATE);
+		TRANSPARENT.add(Material.REDSTONE_TORCH_OFF);
+		TRANSPARENT.add(Material.REDSTONE_TORCH_ON);
+		TRANSPARENT.add(Material.STONE_BUTTON);
+		TRANSPARENT.add(Material.SUGAR_CANE_BLOCK);
+		TRANSPARENT.add(Material.DIODE_BLOCK_OFF);
+		TRANSPARENT.add(Material.DIODE_BLOCK_ON);
+		TRANSPARENT.add(Material.TRAP_DOOR);
+		TRANSPARENT.add(Material.PUMPKIN_STEM);
+		TRANSPARENT.add(Material.MELON_STEM);
+		TRANSPARENT.add(Material.VINE);
+		TRANSPARENT.add(Material.NETHER_WARTS);
+		TRANSPARENT.add(Material.WATER);
+		TRANSPARENT.add(Material.STATIONARY_WATER);
+		TRANSPARENT.add(Material.LAVA);
+		TRANSPARENT.add(Material.STATIONARY_LAVA);
+		TRANSPARENT.add(Material.WATER_LILY);
+		TRANSPARENT.add(Material.STEP);
+		TRANSPARENT.add(Material.CROPS);
+		TRANSPARENT.add(Material.POTATO);
+		TRANSPARENT.add(Material.CARROT);
+	}
+
 
 	/**
 	 * Standard messaging with prefix and & colour codes
 	 */
+
 	public static void message(CommandSender sender, String msg)
 	{
 		sender.sendMessage(PREFIX + ChatColor.translateAlternateColorCodes('&', msg));
@@ -107,6 +158,14 @@ public class BondUtils
 		}
 
 		return blockFace.getOppositeFace();
+	}
+
+	/**
+	 * Returns true if the given material is transparent, otherwise false
+	 */
+	public static boolean isTransparent(Material material)
+	{
+		return TRANSPARENT.contains(material);
 	}
 
 

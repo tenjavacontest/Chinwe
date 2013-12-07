@@ -1,7 +1,7 @@
 package net.chunk64.chinwe.gadgets;
 
-import net.chunk64.chinwe.Main;
 import net.chunk64.chinwe.Agent;
+import net.chunk64.chinwe.Main;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -44,7 +44,7 @@ public abstract class Gadget implements Listener
 	/**
 	 * Returns true if cooldown has finished
 	 */
-	protected boolean isCooldownOver()
+	public boolean isCooldownOver()
 	{
 		return cooldown < 0 || cooldown <= System.currentTimeMillis();
 	}
@@ -91,13 +91,15 @@ public abstract class Gadget implements Listener
 	public void setXpLevel(int level, Player player)
 	{
 		this.xpLevel = level;
-		player.setLevel(level < 0 ? 0 : level);
+		if (player.getItemInHand().equals(type.getItemStack()))
+			player.setLevel(level < 0 ? 0 : level);
 	}
 
 	public void setXpBar(float bar, Player player)
 	{
 		this.xpBar = bar;
-		player.setExp(bar < 0 ? 0 : bar);
+		if (player.getItemInHand().equals(type.getItemStack()))
+			player.setExp(bar < 0 ? 0 : bar);
 	}
 
 	public Agent getAgent()
@@ -119,7 +121,6 @@ public abstract class Gadget implements Listener
 	{
 		return "Gadget{agent=" + agent + ", type=" + type.toString() + "}";
 	}
-
 
 
 }

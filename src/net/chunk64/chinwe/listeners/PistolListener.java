@@ -4,6 +4,7 @@ import net.chunk64.chinwe.Agent;
 import net.chunk64.chinwe.Main;
 import net.chunk64.chinwe.gadgets.GadgetType;
 import net.chunk64.chinwe.gadgets.Pistol;
+import net.chunk64.chinwe.util.BondUtils;
 import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
@@ -35,21 +36,21 @@ public class PistolListener implements Listener
 		// pistol
 		if (event.getDamager() instanceof Arrow && event.getDamager().hasMetadata("bond:bullet"))
 		{
-			Player shooter = (Player) ((Arrow) event.getDamager()).getShooter(); // only players could shoot a bullet
+			final Player shooter = (Player) ((Arrow) event.getDamager()).getShooter(); // only players could shoot a bullet
 			final LivingEntity entity = (LivingEntity) event.getEntity();
 
 			// ding
 			shooter.playSound(shooter.getLocation(), Sound.ORB_PICKUP, 1F, 1F);
 
 			// kill
-			entity.setHealth(0D);
+			entity.damage(Double.MAX_VALUE, shooter);
 			new BukkitRunnable()
 			{
 				@Override
 				public void run()
 				{
 					entity.remove();
-					entity.getWorld().playEffect(entity.getLocation(), Effect.MOBSPAWNER_FLAMES, 1);
+					entity.getWorld().playEffect(entity.getLocation(), Effect.SMOKE, BondUtils.getDirection(shooter.getLocation()));
 				}
 			}.runTaskLater(plugin, 2L);
 		}
@@ -73,7 +74,9 @@ public class PistolListener implements Listener
 			return;
 
 		// fire
+		event.setCancelled(true);
 		pistol.execute();
+
 
 	}
 

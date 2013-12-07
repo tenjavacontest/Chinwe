@@ -69,8 +69,6 @@ public class BallpointPen extends Gadget
 	 */
 	public void drop(Item item, Player player)
 	{
-		System.out.println("task = " + task);
-
 		if (task != null)
 			task.cancel();
 

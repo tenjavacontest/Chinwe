@@ -44,14 +44,14 @@ public class Pistol extends Gadget
 		// fire
 		Arrow bullet = p.launchProjectile(Arrow.class);
 		bullet.setVelocity(bullet.getVelocity().multiply(2));
-		bullet.setMetadata("bond:bullet", new FixedMetadataValue(plugin, p.getName()));
+		bullet.setMetadata("bond:bullet", new FixedMetadataValue(plugin, true));
 		setXpLevel(ammo, p);
 
 		// effects
 		BlockFace direction = BondUtils.getDirection(p.getLocation().add(p.getLocation().getDirection()));
 		for (int i = 0; i < 3; i++)
 			p.getWorld().playEffect(p.getEyeLocation(), Effect.SMOKE, direction);
-		p.playSound(p.getLocation(), Sound.CAT_HISS, 0.3F, 3F);
+		p.playSound(p.getLocation(), Sound.VILLAGER_DEATH, 0.3F, 2F);
 
 		// cooldown
 		addCooldown(0.5);

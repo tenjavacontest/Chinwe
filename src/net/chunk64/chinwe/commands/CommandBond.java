@@ -35,7 +35,7 @@ public class CommandBond extends BaseBondCommand
 		// destroy
 		else
 		{
-			agent.terminate(true);
+			agent.terminate(false);
 			BondUtils.message(sender, "&bYou retired from field work!");
 		}
 
