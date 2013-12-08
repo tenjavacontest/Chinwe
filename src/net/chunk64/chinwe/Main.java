@@ -7,7 +7,6 @@ import net.chunk64.chinwe.listeners.AgentListener;
 import net.chunk64.chinwe.listeners.BallpointPenListener;
 import net.chunk64.chinwe.listeners.PistolListener;
 import net.chunk64.chinwe.listeners.WristwatchListener;
-import net.chunk64.chinwe.util.Config;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -24,8 +23,6 @@ public class Main extends JavaPlugin
 	{
 		instance = this;
 		init();
-		new Config(this);
-
 	}
 
 	/**
